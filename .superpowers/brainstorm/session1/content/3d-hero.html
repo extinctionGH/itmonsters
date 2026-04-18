@@ -1,0 +1,163 @@
+<h2>How about a 3D "Scrollytelling" Hero? (The Jesko Jets approach)</h2>
+<p class="subtitle">You want to mix the clean Pentagram header with the giant emblem, BUT add high-end 3D interactability. Here is how that works.</p>
+
+<style>
+  .hero-preview {
+    border: 2px solid #eaeaea;
+    border-radius: 8px;
+    background: #fff;
+    overflow: hidden;
+    height: 350px;
+    position: relative;
+    font-family: sans-serif;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Mock Logo */
+  .mock-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #C93E67;
+    z-index: 10;
+  }
+  .mock-logo-icon {
+    width: 30px;
+    height: 30px;
+  }
+  .mock-logo-text {
+    font-family: 'Brush Script MT', cursive; 
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: -0.5px;
+  }
+  
+  /* Clean Header */
+  .header-clean {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 10;
+  }
+  .nav-clean {
+    display: flex;
+    gap: 12px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    align-items: center;
+    color: #000;
+  }
+  
+  /* 3D Canvas Area */
+  .canvas-3d {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at center, #ffffff 0%, #f0f0f0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  /* The "3D" Eye */
+  .eye-3d {
+    width: 150px;
+    height: 150px;
+    animation: float-rotate 6s infinite ease-in-out;
+    filter: drop-shadow(0px 20px 30px rgba(201, 62, 103, 0.4)); /* Pink glow */
+  }
+  
+  @keyframes float-rotate {
+    0% { transform: translateY(0px) rotateY(0deg) rotateX(10deg); }
+    50% { transform: translateY(-15px) rotateY(20deg) rotateX(-5deg); }
+    100% { transform: translateY(0px) rotateY(0deg) rotateX(10deg); }
+  }
+
+  /* Scrollytelling overlay text */
+  .scroll-text {
+    position: absolute;
+    bottom: 20px;
+    left: 16px;
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: #000;
+    z-index: 10;
+    opacity: 0.9;
+  }
+
+  /* Grid creeping up */
+  .incoming-grid {
+    position: absolute;
+    bottom: -60px;
+    left: 16px;
+    right: 16px;
+    height: 40px;
+    background: #fff;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    box-shadow: 0 -10px 20px rgba(0,0,0,0.05);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 8px;
+  }
+  .grid-box {
+    background: #eee;
+    border-radius: 4px;
+  }
+</style>
+
+<div class="options">
+  <div class="option" data-choice="3d-scrollytelling" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>The 3D Scrollytelling Interactive Canvas</h3>
+      <p><strong>The Mix:</strong> We keep the clean, minimal Pentagram header at the top. But the rest of the screen is a <strong>live 3D WebGL canvas</strong> (using Three.js / React Three Fiber).</p>
+      <ul>
+        <li><strong>Initial Load:</strong> A massive, interactive 3D model of the ITMonsters triangular eye floating in the center. It reacts to mouse movement.</li>
+        <li><strong>The Scroll (Jesko Jets style):</strong> As you scroll down, the 3D model doesn't just scroll up—it <em>animates</em>. It shrinks, rotates, and locks into the top corner, OR the rigid Pentagram grid slides up from the bottom of the screen, covering the 3D canvas seamlessly.</li>
+        <li><strong>The Vibe:</strong> Extremely high-end, blending corporate structural perfection (the grid) with cutting-edge tech (the 3D interactive logo glowing in ITMonsters Pink).</li>
+      </ul>
+      
+      <div class="hero-preview">
+        <div class="header-clean">
+          <div class="mock-logo">
+            <span class="mock-logo-text">itmonsters</span>
+          </div>
+          <div class="nav-clean">
+            <span>WORK</span> <span>SERVICES</span>
+          </div>
+        </div>
+        
+        <div class="canvas-3d">
+           <!-- Mocking a 3D element -->
+           <svg class="eye-3d" viewBox="0 0 100 100" fill="none" stroke="#C93E67" stroke-width="6" stroke-linejoin="round">
+            <polygon points="50,10 10,90 90,90" fill="rgba(201, 62, 103, 0.1)"/>
+            <circle cx="50" cy="65" r="15" fill="#FFC300" stroke="none" />
+            <circle cx="50" cy="65" r="5" fill="#541D40" stroke="none" />
+            <!-- pillars -->
+            <line x1="35" y1="85" x2="35" y2="75" />
+            <line x1="50" y1="85" x2="50" y2="75" />
+            <line x1="65" y1="85" x2="65" y2="75" />
+          </svg>
+        </div>
+
+        <div class="scroll-text">
+          CREATIVITY<br>BORN FROM<br><span style="color: #C93E67;">CHAOS.</span>
+        </div>
+
+        <!-- The grid waiting to slide up on scroll -->
+        <div class="incoming-grid">
+          <div class="grid-box"></div>
+          <div class="grid-box"></div>
+          <div class="grid-box"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

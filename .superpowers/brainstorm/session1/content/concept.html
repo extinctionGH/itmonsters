@@ -1,0 +1,130 @@
+<h2>How should we blend the Pentagram structure with ITMonsters chaos?</h2>
+<p class="subtitle">Since Deep Purple as a dark mode background won't work well with the accents, here are two bright approaches using your Pink (#C93E67) and Yellow (#FFC300).</p>
+
+<style>
+  /* Base styles for the mockup cards */
+  .preview-box {
+    border: 2px solid #eaeaea;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    background: #fff;
+    overflow: hidden;
+    position: relative;
+    font-family: sans-serif;
+  }
+  
+  /* Pentagram grid basis */
+  .grid-layout {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .grid-item {
+    height: 80px;
+    background: #f4f4f4;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Option 1: Minimalist with a Twist */
+  .twist-preview .grid-item:hover {
+    background: #C93E67;
+    transition: background 0.3s;
+  }
+  .twist-preview .grid-item::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background: #FFC300;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .twist-preview .grid-item:hover::after {
+    opacity: 1;
+    transform: scale(3);
+  }
+  .twist-preview h4 {
+    color: #000;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 0 0 8px 0;
+  }
+
+  /* Option 2: Full Creative Chaos */
+  .chaos-preview {
+    background: #C93E67;
+    color: #fff;
+    border-color: #C93E67;
+  }
+  .chaos-preview h4 {
+    color: #FFC300;
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    transform: rotate(-2deg);
+    margin: 0 0 8px 0;
+    letter-spacing: -1px;
+  }
+  .chaos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .chaos-grid .grid-item {
+    background: #fff;
+    transform: rotate(1deg);
+    box-shadow: 4px 4px 0px #FFC300;
+  }
+  .chaos-grid .grid-item:nth-child(2) {
+    transform: rotate(-2deg);
+  }
+  .chaos-grid .grid-item:nth-child(3) {
+    transform: rotate(3deg) translateY(5px);
+  }
+</style>
+
+<div class="options">
+  <div class="option" data-choice="minimalist-twist" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Minimalist with a Twist</h3>
+      <p>Clean white background like Pentagram. The rigid grid stays intact, but hovering reveals aggressive pink/yellow animations and custom cursors. Professional but surprising.</p>
+      
+      <div class="preview-box twist-preview">
+        <h4>ITMonsters</h4>
+        <div style="width: 40%; height: 4px; background: #000; margin-bottom: 12px;"></div>
+        <div class="grid-layout">
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="option" data-choice="creative-chaos" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Full Creative Chaos</h3>
+      <p>The Pink (#C93E67) acts as the main hero background. The grid exists but feels slightly broken (offset elements, solid yellow drop shadows, slanted typography).</p>
+      
+      <div class="preview-box chaos-preview">
+        <h4>ITMonsters</h4>
+        <div style="width: 40%; height: 4px; background: #FFC300; margin-bottom: 12px; transform: rotate(1deg);"></div>
+        <div class="chaos-grid">
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

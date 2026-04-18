@@ -1,0 +1,143 @@
+<h2>How should the Hero section introduce ITMonsters?</h2>
+<p class="subtitle">Now that we have the Minimalist with a Twist base, and the exact Pink (#C93E67) logo with its custom script and triangular eye, what's the first thing people see?</p>
+
+<style>
+  .hero-preview {
+    border: 2px solid #eaeaea;
+    border-radius: 8px;
+    background: #fff;
+    overflow: hidden;
+    height: 250px;
+    position: relative;
+    font-family: sans-serif;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Mock Logo */
+  .mock-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #C93E67;
+  }
+  .mock-logo-icon {
+    width: 30px;
+    height: 30px;
+  }
+  .mock-logo-text {
+    font-family: 'Brush Script MT', cursive; /* Approximation of chaotic script */
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: -0.5px;
+  }
+  
+  /* Option A: Pentagram Classic */
+  .header-a {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+  }
+  .nav-a {
+    display: flex;
+    gap: 12px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    align-items: center;
+  }
+  .hero-a-content {
+    padding: 24px 16px;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: #000;
+  }
+  
+  /* Option B: Giant Emblem */
+  .hero-b-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: #C93E67;
+  }
+  .giant-icon {
+    width: 80px;
+    height: 80px;
+  }
+  
+  /* Option C: Split Canvas */
+  .hero-c {
+    display: flex;
+    height: 100%;
+  }
+  .hero-c-left {
+    flex: 1;
+    background: #541D40; /* Deep purple */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFC300;
+    font-weight: bold;
+  }
+  .hero-c-right {
+    flex: 1;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
+<div class="options">
+  <div class="option" data-choice="pentagram-classic" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>The "Pentagram" Classic Header</h3>
+      <p>A clean top navigation bar with the ITMonsters logo on the left and links on the right. Below it, a massive, bold typography statement. Very professional.</p>
+      
+      <div class="hero-preview">
+        <div class="header-a">
+          <div class="mock-logo">
+            <svg class="mock-logo-icon" viewBox="0 0 100 100" fill="none" stroke="#C93E67" stroke-width="8" stroke-linejoin="round">
+              <polygon points="50,10 10,90 90,90" />
+              <circle cx="50" cy="65" r="15" />
+            </svg>
+            <span class="mock-logo-text">itmonsters</span>
+          </div>
+          <div class="nav-a">
+            <span>WORK</span> <span>SERVICES</span>
+          </div>
+        </div>
+        <div class="hero-a-content">
+          CREATIVITY<br>BORN FROM<br><span style="color: #C93E67;">CHAOS.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="option" data-choice="giant-emblem" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>The Giant Emblem (Animated)</h3>
+      <p>The screen starts completely blank except for a massive, glowing Pink triangular eye icon in the absolute center. Scrolling shrinks it into the top corner as the grid appears.</p>
+      
+      <div class="hero-preview">
+        <div class="hero-b-content">
+          <svg class="giant-icon" viewBox="0 0 100 100" fill="none" stroke="#C93E67" stroke-width="8" stroke-linejoin="round">
+            <polygon points="50,10 10,90 90,90" />
+            <circle cx="50" cy="65" r="15" />
+            <!-- 3 pillars below eye inside triangle -->
+            <line x1="35" y1="85" x2="35" y2="75" />
+            <line x1="50" y1="85" x2="50" y2="75" />
+            <line x1="65" y1="85" x2="65" y2="75" />
+          </svg>
+          <span class="mock-logo-text" style="font-size: 2rem;">itmonsters</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

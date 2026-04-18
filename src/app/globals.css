@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-im-pink: #C93E67;
+  --color-im-yellow: #FFC300;
+  --color-im-purple: #541D40;
+  --color-im-white: #FFFFFF;
+  --color-im-gray: #F4F4F4;
+  --color-im-black: #000000;
+  --font-sans: var(--font-centrale-sans), sans-serif;
+}
+
+@layer base {
+  html {
+    /* Responsive font sizing preventing overflow */
+    font-size: clamp(14px, 1vw + 10px, 18px);
+    scroll-behavior: smooth;
+  }
+}
