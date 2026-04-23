@@ -13,7 +13,19 @@ const PORTFOLIO_ITEMS = [
   { title: 'Solaz Fiesta de Musica', desc: 'Celebrating original Chavacano music with vibrant motion design.', tags: ['3D', 'Motion Graphics', 'Events'], col: 'md:col-span-6' },
   { title: 'Gretchen Ho Collab', desc: 'Custom apparel design for broadcast personalities.', tags: ['Apparel Design', 'Fashion'], col: 'md:col-span-6' },
   { title: 'I saw.Design', desc: 'Creative partnership and visual identity execution.', tags: ['Web Design', 'UI-UX', 'Technology'], col: 'md:col-span-4' },
-  { title: 'ITMonsters Showreel', desc: 'A chaotic, high-energy compilation of our best film and 3D work.', tags: ['Film', '3D Visualization'], col: 'md:col-span-8' }
+  { title: 'ITMonsters Showreel', desc: 'A chaotic, high-energy compilation of our best film and 3D work.', tags: ['Film', '3D Visualization'], col: 'md:col-span-8' },
+  { title: 'Project Echo', desc: 'Experimental 3D soundscapes and audio-reactive environments.', tags: ['3D', 'Interaction Design'], col: 'md:col-span-4' },
+  { title: 'Neo-Zambo Architecture', desc: 'Visualizing the future of urban Zamboanga through high-fidelity CGI.', tags: ['3D', 'Visualization'], col: 'md:col-span-4' },
+  { title: 'Pulse App UI', desc: 'Health-tech application interface design and interactive prototyping.', tags: ['Web Design', 'App Design'], col: 'md:col-span-4' },
+  { title: 'Yakan Pattern Study', desc: 'A digital archive of traditional weaving patterns for modern motion.', tags: ['Branding', 'Motion Graphics'], col: 'md:col-span-4' },
+  { title: 'Vortex Motion Brand', desc: 'High-speed kinetic identity for a sports broadcast network.', tags: ['Motion Graphics', 'Branding'], col: 'md:col-span-6' },
+  { title: 'Lumina Film Festival', desc: 'Creative direction and promotional film for indie filmmakers.', tags: ['Film', 'Creative Direction'], col: 'md:col-span-6' },
+  { title: 'Cyber-Silk Identity', desc: 'Merging heritage fabrics with futuristic neon aesthetics.', tags: ['Branding', 'Apparel'], col: 'md:col-span-8' },
+  { title: 'Gravity Lab 3D', desc: 'Physics-based simulation work for product design exploration.', tags: ['3D', 'Product Rendering'], col: 'md:col-span-4' },
+  { title: 'Summit Web Platform', desc: 'High-performance e-commerce platform for luxury mountain gear.', tags: ['Web Design', 'Development'], col: 'md:col-span-4' },
+  { title: 'Neon Nights Film', desc: 'Cinematic documentary exploring city life after dark.', tags: ['Film', 'Cinematography'], col: 'md:col-span-8' },
+  { title: 'Minimalist Motion', desc: 'Clean, Swiss-style animation for complex data storytelling.', tags: ['Motion Graphics'], col: 'md:col-span-4' },
+  { title: 'Chavacano Typeface', desc: 'Custom typography design inspired by regional linguistic roots.', tags: ['Branding', 'Typography'], col: 'md:col-span-8' }
 ];
 
 const DISCIPLINES = ['Everything', 'Branding', '3D', 'Motion Graphics', 'Web Design', 'Apparel Design', 'Film'];
