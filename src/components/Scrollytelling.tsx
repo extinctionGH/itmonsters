@@ -166,21 +166,21 @@ export default function Scrollytelling() {
       {/* Spacer to define when the grid slides up */}
       <div className="w-full h-[300vh] pointer-events-none"></div>
 
-      {/* Act 3 Grid - Added solid pink background to prevent model bleed-through */}
-      <div ref={gridRef} className="relative w-full z-30 pt-[100vh] px-4 md:px-10 min-h-screen bg-im-pink">
+      {/* Act 3 Grid - Added solid Deep Purple background to prevent model bleed-through */}
+      <div ref={gridRef} className="relative w-full z-30 pt-[100vh] px-4 md:px-10 min-h-screen bg-[#541D40]">
         
-        {/* Pentagram-style Interactive Filter Overlay */}
-        <div ref={filterTextRef} className="max-w-[1600px] mx-auto pb-16 flex flex-col md:flex-row items-center justify-center text-3xl md:text-5xl font-bold tracking-tighter text-im-white uppercase relative z-50">
-          <span className="opacity-80">We engineer&nbsp;</span>
+        {/* Pentagram-style Interactive Filter Overlay - Massive Brutalist Type */}
+        <div ref={filterTextRef} className="max-w-[1600px] mx-auto pb-32 flex flex-col items-start justify-center text-[10vw] md:text-[8vw] font-black tracking-tighter text-white uppercase relative z-50 leading-[0.85]">
+          <span className="opacity-30">We produce&nbsp;</span>
           
           <div 
-            className="relative cursor-pointer group mt-2 md:mt-0"
+            className="relative cursor-pointer group"
             onMouseEnter={() => setIsFilterOpen(true)}
             onMouseLeave={() => setIsFilterOpen(false)}
           >
-            <span className="text-im-yellow flex items-center border-b-4 border-im-yellow pb-1 hover:text-im-green hover:border-im-green transition-colors duration-300">
-              {activeDiscipline} 
-              <svg className={`w-6 h-6 md:w-8 md:h-8 ml-2 transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <span className="text-im-yellow flex items-center border-b-[0.5vw] border-im-yellow pb-1 hover:text-im-green hover:border-im-green transition-colors duration-300">
+              {activeDiscipline === 'Everything' ? 'Everything' : activeDiscipline} 
+              <svg className={`w-[6vw] h-[6vw] md:w-[4vw] md:h-[4vw] ml-4 transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M19 9l-7 7-7-7" />
               </svg>
             </span>
@@ -206,32 +206,46 @@ export default function Scrollytelling() {
           <span className="opacity-80 hidden md:inline">&nbsp;for everyone.</span>
         </div>
 
-        {/* Dynamic Portfolio Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-16 gap-x-8 max-w-[1600px] mx-auto pb-32">
+        {/* Dynamic Portfolio Grid - Editorial Abstract Matrix */}
+        <div className="grid grid-cols-1 md:grid-cols-12 max-w-[1600px] mx-auto border-t border-white/10">
           {filteredProjects.map((project, i) => (
-            <div key={`${project.title}-${i}`} className={`group block relative overflow-hidden animate-in fade-in zoom-in duration-500 ${project.col} cursor-none`}>
+            <div 
+              key={`${project.title}-${i}`} 
+              className={`group block relative overflow-hidden animate-in fade-in zoom-in duration-500 ${project.col} border-b border-white/10 ${i % 2 === 0 ? 'md:border-r' : ''} cursor-none transition-all duration-500 hover:bg-white/[0.02]`}
+            >
               
-              {/* Image / Asset Placeholder */}
-              <div className="relative aspect-[3/2] w-full bg-im-pink overflow-hidden border border-im-white/10 transition-colors duration-300 group-hover:border-im-pink">
-                <div className="absolute inset-0 z-10 opacity-0 group-hover:animate-flash-brand pointer-events-none mix-blend-overlay"></div>
-                <div className="absolute inset-0 flex items-center justify-center text-im-white/20 font-bold tracking-widest uppercase">
-                  [ Asset Placeholder ]
+              {/* Image / Asset Placeholder with Editorial Padding */}
+              <div className="p-4 md:p-8">
+                <div className="relative aspect-[16/10] w-full bg-white/5 overflow-hidden border border-white/10 transition-colors duration-500 group-hover:border-im-yellow/30">
+                  <div className="absolute inset-0 z-10 opacity-0 group-hover:animate-flash-brand pointer-events-none mix-blend-overlay"></div>
+                  <div className="absolute inset-0 flex items-center justify-center text-white/10 font-black tracking-[0.2em] uppercase text-xs md:text-sm">
+                    [ Case Study Asset ]
+                  </div>
+                  
+                  {/* Subtle Corner Accents (Engineered look) */}
+                  <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/20"></div>
+                  <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/20"></div>
                 </div>
               </div>
               
-              {/* Pentagram-style Text Below Image */}
-              <div className="pt-6 relative bg-im-pink z-20">
-                <h3 className="text-2xl md:text-3xl font-bold tracking-tighter text-im-white">{project.title}</h3>
-                <p className="mt-2 text-base md:text-lg text-im-white font-medium leading-relaxed max-w-2xl">
+              {/* Editorial Metadata Section */}
+              <div className="px-4 md:px-8 pb-8 md:pb-12 relative z-20">
+                <div className="flex justify-between items-baseline mb-4 opacity-40 font-mono text-[10px] md:text-xs tracking-widest uppercase">
+                  <span>{project.tags.slice(0, 2).join(' // ')}</span>
+                  <span>0{i + 1}</span>
+                </div>
+                
+                <h3 className="text-2xl md:text-4xl font-black tracking-tighter text-white uppercase leading-none">{project.title}</h3>
+                <p className="mt-4 text-sm md:text-base text-white/60 font-medium leading-relaxed max-w-xl">
                   {project.desc}
                 </p>
                 
                 {/* Sliding Metadata Tags (Revealed on Hover) */}
                 <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out">
                   <div className="overflow-hidden">
-                    <div className="flex flex-row flex-wrap gap-3 pt-6">
+                    <div className="flex flex-row flex-wrap gap-2 pt-6">
                       {project.tags.map((tag, tIndex) => (
-                        <span key={tIndex} className="text-xs font-bold tracking-widest uppercase text-im-black bg-[#EAEAEA] rounded-full px-4 py-2 hover:bg-im-pink hover:text-im-white transition-colors duration-300 cursor-pointer">
+                        <span key={tIndex} className="text-[10px] font-bold tracking-widest uppercase text-im-yellow border border-im-yellow/30 rounded-full px-3 py-1 hover:bg-im-yellow hover:text-im-black transition-colors duration-300 cursor-pointer">
                           {tag}
                         </span>
                       ))}
