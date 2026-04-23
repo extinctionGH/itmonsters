@@ -206,9 +206,15 @@ export default function Scrollytelling() {
           <span className="opacity-80 whitespace-nowrap">&nbsp;for everyone.</span>
         </div>
 
-        {/* Dynamic Portfolio Grid - Editorial Abstract Matrix */}
+        {/* Latest Projects Section */}
+        <div className="max-w-[1600px] mx-auto mb-12 flex justify-between items-end border-b border-white/20 pb-4">
+          <h2 className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase text-white/40">Latest Projects</h2>
+          <span className="font-mono text-[10px] opacity-20">[{filteredProjects.slice(0, 6).length}]</span>
+        </div>
+
+        {/* Dynamic Portfolio Grid - Editorial Abstract Matrix (Featured) */}
         <div className="grid grid-cols-1 md:grid-cols-12 max-w-[1600px] mx-auto border-t border-white/10">
-          {filteredProjects.map((project, i) => (
+          {filteredProjects.slice(0, 6).map((project, i) => (
             <div 
               key={`${project.title}-${i}`} 
               className={`group block relative overflow-hidden animate-in fade-in zoom-in duration-500 ${project.col} border-b border-white/10 ${i % 2 === 0 ? 'md:border-r' : ''} cursor-none transition-all duration-500 hover:bg-white/[0.02]`}
@@ -251,6 +257,38 @@ export default function Scrollytelling() {
               
             </div>
           ))}
+        </div>
+
+        {/* Project Index Section (Compact Matrix) */}
+        {filteredProjects.length > 6 && (
+          <div className="mt-32">
+            <div className="max-w-[1600px] mx-auto mb-12 flex justify-between items-end border-b border-white/20 pb-4">
+              <h2 className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase text-white/40">Project Index</h2>
+              <span className="font-mono text-[10px] opacity-20">[{filteredProjects.slice(6).length}]</span>
+            </div>
+
+            <div className="grid grid-cols-2 lg:grid-cols-4 max-w-[1600px] mx-auto border-t border-white/10">
+              {filteredProjects.slice(6).map((project, i) => (
+                <div 
+                  key={`index-${project.title}-${i}`} 
+                  className="group block relative overflow-hidden p-6 border-b border-white/10 border-r last:border-r-0 lg:[&:nth-child(4n)]:border-r-0 cursor-none transition-all duration-500 hover:bg-white/[0.02]"
+                >
+                  <div className="relative aspect-square w-full bg-white/5 mb-6 border border-white/10 group-hover:border-im-yellow/30 transition-colors">
+                    <div className="absolute inset-0 flex items-center justify-center text-[10px] text-white/10 font-bold tracking-widest">
+                      ARCHIVE
+                    </div>
+                  </div>
+                  <h4 className="text-lg font-black text-white uppercase leading-tight group-hover:text-im-yellow transition-colors">{project.title}</h4>
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {project.tags.slice(0, 2).map((tag, tIndex) => (
+                      <span key={tIndex} className="text-[8px] font-mono uppercase opacity-40">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
           
           {filteredProjects.length === 0 && (
              <div className="col-span-12 text-center py-20 text-im-white text-xl font-bold tracking-widest uppercase">
@@ -258,7 +296,6 @@ export default function Scrollytelling() {
              </div>
           )}
         </div>
-      </div>
 
       {/* Floating Dynamic Island Filter (Bottom Dock) - Glassmorphic Noir Style */}
       <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${showFloatingFilter ? 'translate-y-0 opacity-100' : 'translate-y-24 opacity-0 pointer-events-none'}`}>
