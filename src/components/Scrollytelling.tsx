@@ -1,82 +1,271 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Hero3D from './Hero3D';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const PORTFOLIO_ITEMS = [
+  { title: 'Kalasig-lasigan Sumisip', desc: 'Event branding merging Bauhaus structure with Yakan Tennun.', tags: ['Branding', 'Identity', 'Arts & Culture'], col: 'md:col-span-8' },
+  { title: 'HAPIsabela ZPRAA', desc: 'Colorful and playful event branding for regional athletics.', tags: ['Branding', 'Apparel', 'Sports'], col: 'md:col-span-4' },
+  { title: 'Solaz Fiesta de Musica', desc: 'Celebrating original Chavacano music with vibrant motion design.', tags: ['3D', 'Motion Graphics', 'Events'], col: 'md:col-span-6' },
+  { title: 'Gretchen Ho Collab', desc: 'Custom apparel design for broadcast personalities.', tags: ['Apparel Design', 'Fashion'], col: 'md:col-span-6' },
+  { title: 'I saw.Design', desc: 'Creative partnership and visual identity execution.', tags: ['Web Design', 'UI-UX', 'Technology'], col: 'md:col-span-4' },
+  { title: 'ITMonsters Showreel', desc: 'A chaotic, high-energy compilation of our best film and 3D work.', tags: ['Film', '3D Visualization'], col: 'md:col-span-8' }
+];
+
+const DISCIPLINES = ['Everything', 'Branding', '3D', 'Motion Graphics', 'Web Design', 'Apparel Design', 'Film'];
+
 export default function Scrollytelling() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const textAct1Ref = useRef<HTMLDivElement>(null);
+  const textAct2Ref = useRef<HTMLDivElement>(null);
+  const flexAct2Ref = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+  const hero3DRef = useRef<HTMLDivElement>(null);
+  const filterTextRef = useRef<HTMLDivElement>(null);
+  const scrollProgress = useRef(0);
+  
+  const [activeDiscipline, setActiveDiscipline] = useState('Everything');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [showFloatingFilter, setShowFloatingFilter] = useState(false);
+  const [showModel, setShowModel] = useState(true);
+
+  // Filter logic
+  const filteredProjects = activeDiscipline === 'Everything' 
+    ? PORTFOLIO_ITEMS 
+    : PORTFOLIO_ITEMS.filter(p => p.tags.some(tag => tag.includes(activeDiscipline)));
+
+  // Scroll listener for floating dock and model optimization
+  useEffect(() => {
+    const onScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const totalScroll = document.documentElement.scrollHeight - windowHeight;
+      const progress = scrollY / totalScroll;
+
+      if (filterTextRef.current) {
+        const rect = filterTextRef.current.getBoundingClientRect();
+        setShowFloatingFilter(rect.bottom < 100);
+      }
+
+      // Optimization: Unload model when deep into the grid (progress > 0.7)
+      // and reload when scrolling back up.
+      if (progress > 0.7 && showModel) {
+        setShowModel(false);
+      } else if (progress <= 0.7 && !showModel) {
+        setShowModel(true);
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [showModel]);
 
   useEffect(() => {
     let ctx = gsap.context(() => {
-      // Pin the 3D canvas
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: 'top top',
-        end: '+=200%',
-        pin: true,
-        pinSpacing: true,
-      });
-
-      // Fade out text, slide up grid
-      gsap.to(textRef.current, {
-        opacity: 0,
-        y: -50,
+      // Main Narrative Timeline
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=100%',
+          end: '+=400%', 
+          scrub: 1,
+          onUpdate: (self) => {
+            scrollProgress.current = self.progress;
+          },
+        }
+      });
+
+      // Act 1 -> Act 2 (Progress 0 to 0.15)
+      tl.to(textAct1Ref.current, { opacity: 0, y: -50, duration: 0.15 }, 0)
+        .to(bgRef.current, { backgroundColor: '#C03B62', duration: 0.15 }, 0)
+        .to([textAct2Ref.current, flexAct2Ref.current], { opacity: 1, x: 0, duration: 0.15 }, 0.15)
+        
+      // Act 2 Pause (Progress 0.40 to 0.60)
+      
+      // Act 3 Fade: Fade out Act 2 and the Eye Model together to ensure a polished transition
+        .to([textAct2Ref.current, flexAct2Ref.current], { opacity: 0, x: -50, duration: 0.20 }, 0.60)
+        .to(hero3DRef.current, { opacity: 0, duration: 0.20 }, 0.60);
+
+      // Grid border-radius animation
+      gsap.to(gridRef.current, {
+        borderTopLeftRadius: '0px',
+        borderTopRightRadius: '0px',
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: 'top 100px',
+          end: 'top top',
           scrub: true,
         }
       });
 
-      gsap.fromTo(gridRef.current, 
-        { y: '100vh' },
-        {
-          y: 0,
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top top',
-            end: '+=200%',
-            scrub: true,
-          }
-        }
-      );
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
+  const handleFilterClick = (d: string) => {
+    setActiveDiscipline(d);
+    setIsFilterOpen(false);
+    // Smooth scroll back to the filter text if they filter from way down
+    if (showFloatingFilter && filterTextRef.current) {
+      const topPos = filterTextRef.current.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: topPos - 120, behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div ref={containerRef} className="relative w-full h-screen overflow-hidden">
-      <Hero3D />
+    <div ref={containerRef} className="relative w-full bg-[#C03B62]">
       
-      <div ref={textRef} className="absolute bottom-10 left-4 md:left-10 z-10 pointer-events-none">
-        <h1 className="text-5xl md:text-8xl font-black leading-none text-im-black">
-          CREATIVITY<br />BORN FROM<br />
-          <span className="text-im-pink">CHAOS.</span>
-        </h1>
+      {/* Sticky Scene */}
+      <div className="sticky top-0 left-0 w-full h-screen overflow-hidden">
+        {/* Background Layer */}
+        <div ref={bgRef} className="absolute inset-0 w-full h-full bg-[#FFFFFF] z-0"></div>
+
+        {/* 3D Hero - Wrapped in ref for GSAP fade and conditional for performance */}
+        <div ref={hero3DRef} className="absolute inset-0 z-10 transition-opacity duration-300">
+          {showModel && <Hero3D scrollProgress={scrollProgress} />}
+        </div>
+        
+        {/* Act 1 Text: The Chaos */}
+        <div ref={textAct1Ref} className="absolute inset-0 flex flex-col justify-center items-center text-center z-20 pointer-events-none px-4">
+          <h1 className="text-[15vw] md:text-[12vw] font-black leading-[0.8] text-im-black tracking-tighter uppercase">
+            Creativity<br />
+            <span className="font-serif font-light italic text-im-pink tracking-normal">Born From</span><br />
+            <span className="text-transparent" style={{ WebkitTextStroke: '4px #000' }}>Chaos.</span>
+          </h1>
+          <p className="absolute bottom-12 left-1/2 -translate-x-1/2 text-xs md:text-sm font-bold tracking-[0.4em] uppercase text-im-black/60">
+            Zamboanga City // Philippines
+          </p>
+        </div>
+
+        {/* Act 2 Text: The Structure */}
+        <div className="absolute top-1/2 -translate-y-1/2 left-4 md:left-12 z-20 pointer-events-none max-w-5xl w-full">
+          <div ref={textAct2Ref} className="opacity-0 -translate-x-10 mix-blend-difference">
+            <h2 className="text-5xl md:text-[7rem] lg:text-[9rem] font-black leading-[0.85] uppercase tracking-tighter text-white">
+              We Engineer<br />
+              <span className="italic">Visual Order.</span>
+            </h2>
+            <p className="mt-8 text-lg md:text-3xl font-medium leading-snug max-w-3xl text-white">
+              ITMonsters is a creative studio operating at the intersection of brand identity, immersive 3D, and digital platforms. We transform chaotic ideas into highly structured, premium digital realities.
+            </p>
+          </div>
+          <div ref={flexAct2Ref} className="opacity-0 -translate-x-10 mt-10 flex flex-wrap gap-4 text-xs md:text-sm font-bold text-im-yellow uppercase tracking-[0.2em]">
+            <span>Branding</span> <span>//</span>
+            <span>Motion</span> <span>//</span>
+            <span>3D Design</span> <span>//</span>
+            <span>Web Dev</span> <span>//</span>
+            <span>Film</span>
+          </div>
+        </div>
       </div>
 
-      <div ref={gridRef} className="absolute top-0 left-0 w-full h-screen bg-im-white z-20 pt-24 px-4 md:px-10 overflow-y-auto rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.1)]">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 max-w-7xl mx-auto pb-20">
-          {/* Mock Portfolio Items */}
-          {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="group relative aspect-square bg-im-gray rounded-lg overflow-hidden cursor-pointer border border-transparent hover:border-im-pink transition-colors">
-              <div className="absolute inset-0 bg-im-pink translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></div>
-              <div className="absolute inset-0 p-6 flex flex-col justify-end z-10 mix-blend-difference text-im-white">
-                <h3 className="text-2xl font-bold">Project 0{i}</h3>
-                <p className="text-sm">Branding & 3D</p>
+      {/* Spacer to define when the grid slides up */}
+      <div className="w-full h-[300vh] pointer-events-none"></div>
+
+      {/* Act 3 Grid - Added solid pink background to prevent model bleed-through */}
+      <div ref={gridRef} className="relative w-full z-30 pt-[100vh] px-4 md:px-10 min-h-screen bg-im-pink">
+        
+        {/* Pentagram-style Interactive Filter Overlay */}
+        <div ref={filterTextRef} className="max-w-[1600px] mx-auto pb-16 flex flex-col md:flex-row items-center justify-center text-3xl md:text-5xl font-bold tracking-tighter text-im-white uppercase relative z-50">
+          <span className="opacity-80">We engineer&nbsp;</span>
+          
+          <div 
+            className="relative cursor-pointer group mt-2 md:mt-0"
+            onMouseEnter={() => setIsFilterOpen(true)}
+            onMouseLeave={() => setIsFilterOpen(false)}
+          >
+            <span className="text-im-yellow flex items-center border-b-4 border-im-yellow pb-1 hover:text-im-green hover:border-im-green transition-colors duration-300">
+              {activeDiscipline} 
+              <svg className={`w-6 h-6 md:w-8 md:h-8 ml-2 transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+            
+            {/* Mega Menu Overlay - Added pt-4 bridge to prevent hover loss */}
+            <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-4 transition-all duration-300 transform origin-top ${isFilterOpen ? 'opacity-100 scale-y-100 visible' : 'opacity-0 scale-y-95 invisible pointer-events-none'}`}>
+              <div className="bg-im-white text-im-black rounded-[32px] p-8 shadow-2xl">
+                <div className="flex flex-wrap gap-3 w-[300px] md:w-[600px] justify-center">
+                  {DISCIPLINES.map(d => (
+                    <button 
+                      key={d} 
+                      onClick={() => handleFilterClick(d)} 
+                      className={`text-sm font-bold tracking-widest uppercase px-6 py-3 rounded-full transition-all duration-300 ${activeDiscipline === d ? 'bg-im-pink text-im-white shadow-lg scale-105' : 'bg-[#EAEAEA] hover:bg-im-black hover:text-im-white'}`}
+                    >
+                      {d}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
+          </div>
+          
+          <span className="opacity-80 hidden md:inline">&nbsp;for everyone.</span>
+        </div>
+
+        {/* Dynamic Portfolio Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-16 gap-x-8 max-w-[1600px] mx-auto pb-32">
+          {filteredProjects.map((project, i) => (
+            <div key={`${project.title}-${i}`} className={`group block relative overflow-hidden animate-in fade-in zoom-in duration-500 ${project.col} cursor-none`}>
+              
+              {/* Image / Asset Placeholder */}
+              <div className="relative aspect-[3/2] w-full bg-im-pink overflow-hidden border border-im-white/10 transition-colors duration-300 group-hover:border-im-pink">
+                <div className="absolute inset-0 z-10 opacity-0 group-hover:animate-flash-brand pointer-events-none mix-blend-overlay"></div>
+                <div className="absolute inset-0 flex items-center justify-center text-im-white/20 font-bold tracking-widest uppercase">
+                  [ Asset Placeholder ]
+                </div>
+              </div>
+              
+              {/* Pentagram-style Text Below Image */}
+              <div className="pt-6 relative bg-im-pink z-20">
+                <h3 className="text-2xl md:text-3xl font-bold tracking-tighter text-im-white">{project.title}</h3>
+                <p className="mt-2 text-base md:text-lg text-im-white font-medium leading-relaxed max-w-2xl">
+                  {project.desc}
+                </p>
+                
+                {/* Sliding Metadata Tags (Revealed on Hover) */}
+                <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out">
+                  <div className="overflow-hidden">
+                    <div className="flex flex-row flex-wrap gap-3 pt-6">
+                      {project.tags.map((tag, tIndex) => (
+                        <span key={tIndex} className="text-xs font-bold tracking-widest uppercase text-im-black bg-[#EAEAEA] rounded-full px-4 py-2 hover:bg-im-pink hover:text-im-white transition-colors duration-300 cursor-pointer">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          ))}
+          
+          {filteredProjects.length === 0 && (
+             <div className="col-span-12 text-center py-20 text-im-white text-xl font-bold tracking-widest uppercase">
+                No projects found for {activeDiscipline}.
+             </div>
+          )}
+        </div>
+      </div>
+
+      {/* Floating Dynamic Island Filter (Bottom Dock) - Glassmorphic Noir Style */}
+      <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${showFloatingFilter ? 'translate-y-0 opacity-100' : 'translate-y-24 opacity-0 pointer-events-none'}`}>
+        <div className="flex items-center gap-1 bg-white/10 backdrop-blur-xl border border-white/20 p-1.5 rounded-full shadow-[0_20px_40px_rgba(0,0,0,0.1)] max-w-[95vw] overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          {DISCIPLINES.map(d => (
+            <button 
+              key={`dock-${d}`}
+              onClick={() => handleFilterClick(d)}
+              className={`text-[10px] md:text-xs font-bold tracking-widest uppercase px-4 py-2 rounded-full transition-all duration-300 whitespace-nowrap ${activeDiscipline === d ? 'bg-im-yellow text-im-black shadow-[0_0_20px_rgba(255,195,0,0.4)] scale-105' : 'text-white/60 hover:text-white hover:bg-white/10'}`}
+            >
+              {d === 'Everything' ? 'All' : d}
+            </button>
           ))}
         </div>
       </div>
+
     </div>
   );
 }
