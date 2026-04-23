@@ -74,19 +74,19 @@ export default function EyeModel({ scrollProgress }: { scrollProgress: React.Mut
       else {
         const p = (progress - 0.60) / 0.40;
         
-        // Sine easing curve for smoother tracking decay
+        // Sine easing curve for smoother transition
         const sineEase = -(Math.cos(Math.PI * p) - 1) / 2;
 
-        // Use linear 'p' to smoothly drift back to the exact center of the screen
-        targetX = THREE.MathUtils.lerp(2.5, 0, p); 
+        // Use sineEase to smoothly drift back to the exact center of the screen
+        targetX = THREE.MathUtils.lerp(2.5, 0, sineEase); 
         targetY = 0;
         
-        // Geometric/exponential scaling provides a perceptually smooth zoom
-        targetScale = 1.3 * Math.pow(60 / 1.3, p); 
+        // Geometric/exponential scaling combined with sineEase for a perfectly smooth zoom
+        targetScale = 1.3 * Math.pow(60 / 1.3, sineEase); 
         
         // Smoothly stop spinning and flatten out to face the camera
         scrollRotX = 0; 
-        scrollRotY = THREE.MathUtils.lerp(-Math.PI / 4, 0, p);
+        scrollRotY = THREE.MathUtils.lerp(-Math.PI / 4, 0, sineEase);
         
         // Smoothly disable mouse tracking using the sine ease to prevent snapping
         mouseInfluence = THREE.MathUtils.lerp(0.2, 0, sineEase); 

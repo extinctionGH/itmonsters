@@ -72,7 +72,7 @@ export default function Scrollytelling() {
           trigger: containerRef.current,
           start: 'top top',
           end: '+=400%', 
-          scrub: 1,
+          scrub: true,
           onUpdate: (self) => {
             scrollProgress.current = self.progress;
           },
@@ -145,7 +145,7 @@ export default function Scrollytelling() {
         {/* Act 2 Text: The Structure */}
         <div className="absolute top-1/2 -translate-y-1/2 left-4 md:left-12 z-20 pointer-events-none max-w-5xl w-full">
           <div ref={textAct2Ref} className="opacity-0 -translate-x-10 mix-blend-difference">
-            <h2 className="text-5xl md:text-[7rem] lg:text-[9rem] font-black leading-[0.85] uppercase tracking-tighter text-white">
+            <h2 className="text-5xl md:text-[7rem] lg:text-[9rem] font-black leading-[0.85] uppercase tracking-tighter text-im-yellow">
               We Engineer<br />
               <span className="italic">Visual Order.</span>
             </h2>
