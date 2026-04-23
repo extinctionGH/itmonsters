@@ -54,7 +54,7 @@ export default function EyeModel({ scrollProgress }: { scrollProgress: React.Mut
       // Act 2: The Structure Transition (0.15 - 0.40)
       else if (progress < 0.40) {
         const p = (progress - 0.15) / 0.25;
-        targetX = THREE.MathUtils.lerp(0, 1.5, p); // Moves to the right
+        targetX = THREE.MathUtils.lerp(0, 2.5, p); // Moves to the right
         targetY = 0;
         targetScale = THREE.MathUtils.lerp(1, 1.3, p); // Scales UP
         scrollRotX = THREE.MathUtils.lerp(Math.PI, 0, p); 
@@ -63,7 +63,7 @@ export default function EyeModel({ scrollProgress }: { scrollProgress: React.Mut
       } 
       // Act 2 Pause (0.40 - 0.60)
       else if (progress < 0.60) {
-        targetX = 1.5;
+        targetX = 2.5;
         targetY = 0;
         targetScale = 1.3;
         scrollRotX = 0;
@@ -74,15 +74,15 @@ export default function EyeModel({ scrollProgress }: { scrollProgress: React.Mut
       else {
         const p = (progress - 0.60) / 0.40;
         
-        // Sine easing curve for smoother scale and tracking decay
+        // Sine easing curve for smoother tracking decay
         const sineEase = -(Math.cos(Math.PI * p) - 1) / 2;
 
         // Use linear 'p' to smoothly drift back to the exact center of the screen
-        targetX = THREE.MathUtils.lerp(1.5, 0, p); 
+        targetX = THREE.MathUtils.lerp(2.5, 0, p); 
         targetY = 0;
         
-        // Scale up massively (e.g., 60x) using the smoother sine ease
-        targetScale = THREE.MathUtils.lerp(1.3, 60, sineEase); 
+        // Geometric/exponential scaling provides a perceptually smooth zoom
+        targetScale = 1.3 * Math.pow(60 / 1.3, p); 
         
         // Smoothly stop spinning and flatten out to face the camera
         scrollRotX = 0; 
