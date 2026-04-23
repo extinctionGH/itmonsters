@@ -169,18 +169,18 @@ export default function Scrollytelling() {
       {/* Act 3 Grid - Added solid Deep Purple background to prevent model bleed-through */}
       <div ref={gridRef} className="relative w-full z-30 pt-[100vh] px-4 md:px-10 min-h-screen bg-[#541D40]">
         
-        {/* Pentagram-style Interactive Filter Overlay - Massive Brutalist Type */}
-        <div ref={filterTextRef} className="max-w-[1600px] mx-auto pb-32 flex flex-col items-start justify-center text-[10vw] md:text-[8vw] font-black tracking-tighter text-white uppercase relative z-50 leading-[0.85]">
+        {/* Pentagram-style Interactive Filter Overlay - Massive Brutalist Type (Single Line) */}
+        <div ref={filterTextRef} className="max-w-[1600px] mx-auto pb-32 flex flex-row flex-wrap items-center justify-start text-[8vw] md:text-[6.5vw] font-black tracking-tighter text-white uppercase relative z-50 leading-[1]">
           <span className="opacity-30">We produce&nbsp;</span>
           
           <div 
-            className="relative cursor-pointer group"
+            className="relative cursor-pointer group inline-block"
             onMouseEnter={() => setIsFilterOpen(true)}
             onMouseLeave={() => setIsFilterOpen(false)}
           >
-            <span className="text-im-yellow flex items-center border-b-[0.5vw] border-im-yellow pb-1 hover:text-im-green hover:border-im-green transition-colors duration-300">
+            <span className="text-im-yellow flex items-center border-b-[0.4vw] border-im-yellow pb-1 hover:text-im-green hover:border-im-green transition-colors duration-300">
               {activeDiscipline === 'Everything' ? 'Everything' : activeDiscipline} 
-              <svg className={`w-[6vw] h-[6vw] md:w-[4vw] md:h-[4vw] ml-4 transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className={`w-[5vw] h-[5vw] md:w-[3vw] md:h-[3vw] ml-4 transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M19 9l-7 7-7-7" />
               </svg>
             </span>
@@ -230,11 +230,6 @@ export default function Scrollytelling() {
               
               {/* Editorial Metadata Section */}
               <div className="px-4 md:px-8 pb-8 md:pb-12 relative z-20">
-                <div className="flex justify-between items-baseline mb-4 opacity-40 font-mono text-[10px] md:text-xs tracking-widest uppercase">
-                  <span>{project.tags.slice(0, 2).join(' // ')}</span>
-                  <span>0{i + 1}</span>
-                </div>
-                
                 <h3 className="text-2xl md:text-4xl font-black tracking-tighter text-white uppercase leading-none">{project.title}</h3>
                 <p className="mt-4 text-sm md:text-base text-white/60 font-medium leading-relaxed max-w-xl">
                   {project.desc}
