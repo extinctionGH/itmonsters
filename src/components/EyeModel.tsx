@@ -102,7 +102,7 @@ export default function EyeModel({ scrollProgress }: { scrollProgress: React.Mut
       groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, idleY + targetY + targetMousePosY, 0.1);
       groupRef.current.scale.setScalar(targetScale);
       groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, scrollRotX + targetMouseRotX, 0.1);
-      groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, idleRotY + targetMouseRotY, 0.1);
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, idleRotY + scrollRotY + targetMouseRotY, 0.1);
 
       // Color transition logic
       // White Background (Act 1) -> Pink Background (Act 2+)

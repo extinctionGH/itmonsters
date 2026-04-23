@@ -65,7 +65,7 @@ export default function Scrollytelling() {
   }, [showModel]);
 
   useEffect(() => {
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       // Main Narrative Timeline
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -154,10 +154,10 @@ export default function Scrollytelling() {
             </p>
           </div>
           <div ref={flexAct2Ref} className="opacity-0 -translate-x-10 mt-10 flex flex-wrap gap-4 text-xs md:text-sm font-bold text-im-yellow uppercase tracking-[0.2em]">
-            <span>Branding</span> <span>//</span>
-            <span>Motion</span> <span>//</span>
-            <span>3D Design</span> <span>//</span>
-            <span>Web Dev</span> <span>//</span>
+            <span>Branding</span> <span>{'//'}</span>
+            <span>Motion</span> <span>{'//'}</span>
+            <span>3D Design</span> <span>{'//'}</span>
+            <span>Web Dev</span> <span>{'//'}</span>
             <span>Film</span>
           </div>
         </div>

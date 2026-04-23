@@ -11,7 +11,7 @@ export default function Showreel() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       // Create a cinematic parallax effect for the video
       gsap.to(videoRef.current, {
         yPercent: 20,
