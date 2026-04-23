@@ -54,7 +54,7 @@ export default function EyeModel({ scrollProgress }: { scrollProgress: React.Mut
       // Act 2: The Structure Transition (0.15 - 0.40)
       else if (progress < 0.40) {
         const p = (progress - 0.15) / 0.25;
-        targetX = THREE.MathUtils.lerp(0, 1.0, p); // Moves to the right
+        targetX = THREE.MathUtils.lerp(0, 1.5, p); // Moves to the right
         targetY = 0;
         targetScale = THREE.MathUtils.lerp(1, 1.3, p); // Scales UP
         scrollRotX = THREE.MathUtils.lerp(Math.PI, 0, p); 
@@ -63,7 +63,7 @@ export default function EyeModel({ scrollProgress }: { scrollProgress: React.Mut
       } 
       // Act 2 Pause (0.40 - 0.60)
       else if (progress < 0.60) {
-        targetX = 1.0;
+        targetX = 1.5;
         targetY = 0;
         targetScale = 1.3;
         scrollRotX = 0;
@@ -78,7 +78,7 @@ export default function EyeModel({ scrollProgress }: { scrollProgress: React.Mut
         const sineEase = -(Math.cos(Math.PI * p) - 1) / 2;
 
         // Use linear 'p' to smoothly drift back to the exact center of the screen
-        targetX = THREE.MathUtils.lerp(1.0, 0, p); 
+        targetX = THREE.MathUtils.lerp(1.5, 0, p); 
         targetY = 0;
         
         // Scale up massively (e.g., 60x) using the smoother sine ease
