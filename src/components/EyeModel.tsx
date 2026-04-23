@@ -54,13 +54,22 @@ export default function EyeModel({ scrollProgress }: { scrollProgress: React.Mut
       // Act 2: The Structure Transition (0.15 - 0.40)
       else if (progress < 0.40) {
         const p = (progress - 0.15) / 0.25;
-        targetX = THREE.MathUtils.lerp(0, 2.5, p); // Moves to the right
+        targetX = THREE.MathUtils.lerp(0, 1.0, p); // Moves to the right
         targetY = 0;
         targetScale = THREE.MathUtils.lerp(1, 1.3, p); // Scales UP
         scrollRotX = THREE.MathUtils.lerp(Math.PI, 0, p); 
         scrollRotY = THREE.MathUtils.lerp(0, -Math.PI / 4, p); 
         mouseInfluence = THREE.MathUtils.lerp(1, 0.2, p); 
       } 
+      // Act 2 Pause (0.40 - 0.60)
+      else if (progress < 0.60) {
+        targetX = 1.0;
+        targetY = 0;
+        targetScale = 1.3;
+        scrollRotX = 0;
+        scrollRotY = -Math.PI / 4;
+        mouseInfluence = 0.2;
+      }
       // Act 3: The Execution Zoom (0.60 - 1.0)
       else {
         const p = (progress - 0.60) / 0.40;
