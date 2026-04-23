@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="bg-im-gray text-im-black antialiased overflow-x-hidden cursor-none">
         <CustomCursor />
         <Header />
