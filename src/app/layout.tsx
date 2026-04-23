@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
+import CustomCursor from "@/components/CustomCursor";
 
 export const metadata: Metadata = {
   title: "ITMonsters Production Co.",
@@ -14,7 +15,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-im-gray text-im-black antialiased">
+      <body className="bg-im-gray text-im-black antialiased overflow-x-hidden cursor-none">
+        <CustomCursor />
         <Header />
         {children}
       </body>

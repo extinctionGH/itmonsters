@@ -1,13 +1,21 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-im-pink: #C93E67;
+  --color-im-pink: #C03B62;
   --color-im-yellow: #FFC300;
+  --color-im-green: #39FF14;
   --color-im-purple: #541D40;
   --color-im-white: #FFFFFF;
   --color-im-gray: #F4F4F4;
   --color-im-black: #000000;
   --font-sans: var(--font-centrale-sans), sans-serif;
+
+  @keyframes flash-brand {
+    0% { background-color: var(--color-im-pink); opacity: 0.6; }
+    50% { background-color: var(--color-im-yellow); opacity: 0.8; }
+    100% { background-color: var(--color-im-pink); opacity: 0.6; }
+  }
+  --animate-flash-brand: flash-brand 2s ease-in-out infinite;
 }
 
 @layer base {
