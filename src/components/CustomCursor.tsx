@@ -27,15 +27,15 @@ export default function CustomCursor() {
         setHoverType('play');
         gsap.to(cursor, {
           scale: 6,
-          backgroundColor: '#C03B62', // im-pink
-          mixBlendMode: 'normal',
+          backgroundColor: '#FFFFFF', 
+          mixBlendMode: 'difference',
           duration: 0.3,
         });
       } else if (target.closest('.group')) {
         setHoverType('project');
         gsap.to(cursor, {
           scale: 4,
-          backgroundColor: '#FFC300', // im-yellow
+          backgroundColor: '#FFFFFF',
           mixBlendMode: 'difference',
           duration: 0.3,
         });
@@ -43,8 +43,8 @@ export default function CustomCursor() {
         setHoverType('default');
         gsap.to(cursor, {
           scale: 1,
-          backgroundColor: '#C03B62', // im-pink
-          mixBlendMode: 'normal',
+          backgroundColor: '#FFFFFF',
+          mixBlendMode: 'difference',
           duration: 0.3,
         });
       }
@@ -62,10 +62,10 @@ export default function CustomCursor() {
   return (
     <div
       ref={cursorRef}
-      className="fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-colors overflow-hidden"
-      style={{ backgroundColor: '#C03B62' }}
+      className="fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-colors overflow-hidden mix-blend-difference"
+      style={{ backgroundColor: '#FFFFFF' }}
     >
-      <span ref={textRef} className={`text-[5px] font-bold text-im-black tracking-widest transition-opacity duration-200 ${hoverType === 'play' ? 'opacity-100' : 'opacity-0'}`}>
+      <span ref={textRef} className={`text-[5px] font-bold text-black tracking-widest transition-opacity duration-200 ${hoverType === 'play' ? 'opacity-100' : 'opacity-0'}`}>
         PLAY
       </span>
     </div>
