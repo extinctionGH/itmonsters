@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-im-gray text-im-black antialiased overflow-x-hidden cursor-none">
+      <body className="bg-im-gray text-im-black antialiased overflow-x-hidden cursor-none" suppressHydrationWarning>
         <CustomCursor />
         <Header />
         {children}
