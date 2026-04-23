@@ -33,11 +33,15 @@ export default function Scrollytelling() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [showFloatingFilter, setShowFloatingFilter] = useState(false);
   const [showModel, setShowModel] = useState(true);
+  const [visibleIndexItems, setVisibleIndexItems] = useState(8);
 
   // Filter logic
   const filteredProjects = activeDiscipline === 'Everything' 
     ? PORTFOLIO_ITEMS 
     : PORTFOLIO_ITEMS.filter(p => p.tags.some(tag => tag.includes(activeDiscipline)));
+
+  const indexProjects = filteredProjects.slice(6);
+  const hasMoreIndexItems = visibleIndexItems < indexProjects.length;
 
   // Scroll listener for floating dock and model optimization
   useEffect(() => {
@@ -268,7 +272,7 @@ export default function Scrollytelling() {
             </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 max-w-[1600px] mx-auto border-t border-white/10">
-              {filteredProjects.slice(6).map((project, i) => (
+              {indexProjects.slice(0, visibleIndexItems).map((project, i) => (
                 <div 
                   key={`index-${project.title}-${i}`} 
                   className="group block relative overflow-hidden p-6 border-b border-white/10 border-r last:border-r-0 lg:[&:nth-child(4n)]:border-r-0 cursor-none transition-all duration-500 hover:bg-white/[0.02]"
@@ -287,6 +291,18 @@ export default function Scrollytelling() {
                 </div>
               ))}
             </div>
+
+            {/* Show More Button - Brutalist Style */}
+            {hasMoreIndexItems && (
+              <div className="flex justify-center mt-16">
+                <button 
+                  onClick={() => setVisibleIndexItems(prev => prev + 8)}
+                  className="px-10 py-4 border border-white/20 text-white font-bold tracking-[0.2em] uppercase text-xs hover:bg-white hover:text-im-black transition-all duration-300 rounded-full cursor-none group-play"
+                >
+                  Show More <span className="opacity-40 ml-2">[{indexProjects.length - visibleIndexItems}]</span>
+                </button>
+              </div>
+            )}
           </div>
         )}
           
