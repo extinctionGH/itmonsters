@@ -170,24 +170,24 @@ export default function Scrollytelling() {
       <div ref={gridRef} className="relative w-full z-30 pt-[100vh] px-4 md:px-10 min-h-screen bg-[#541D40]">
         
         {/* Pentagram-style Interactive Filter Overlay - Massive Brutalist Type (Single Line) */}
-        <div ref={filterTextRef} className="max-w-[1600px] mx-auto pb-32 flex flex-row flex-wrap items-center justify-start text-[8vw] md:text-[6.5vw] font-black tracking-tighter text-white uppercase relative z-50 leading-[1]">
-          <span className="opacity-30">We produce&nbsp;</span>
+        <div ref={filterTextRef} className="max-w-[1600px] mx-auto pb-32 flex flex-row flex-wrap items-center justify-start text-[6vw] md:text-[4.5vw] font-black tracking-tighter text-white uppercase relative z-[60] leading-none">
+          <span className="opacity-30 whitespace-nowrap">We produce&nbsp;</span>
           
           <div 
-            className="relative cursor-pointer group inline-block"
+            className="relative cursor-pointer group inline-block z-[70]"
             onMouseEnter={() => setIsFilterOpen(true)}
             onMouseLeave={() => setIsFilterOpen(false)}
           >
-            <span className="text-im-yellow flex items-center border-b-[0.4vw] border-im-yellow pb-1 hover:text-im-green hover:border-im-green transition-colors duration-300">
+            <span className="text-im-yellow flex items-center border-b-[0.3vw] border-im-yellow pb-1 hover:text-im-green hover:border-im-green transition-colors duration-300">
               {activeDiscipline === 'Everything' ? 'Everything' : activeDiscipline} 
-              <svg className={`w-[5vw] h-[5vw] md:w-[3vw] md:h-[3vw] ml-4 transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className={`w-[4vw] h-[4vw] md:w-[2vw] md:h-[2vw] ml-4 transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M19 9l-7 7-7-7" />
               </svg>
             </span>
             
             {/* Mega Menu Overlay - Added pt-4 bridge to prevent hover loss */}
-            <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-4 transition-all duration-300 transform origin-top ${isFilterOpen ? 'opacity-100 scale-y-100 visible' : 'opacity-0 scale-y-95 invisible pointer-events-none'}`}>
-              <div className="bg-im-white text-im-black rounded-[32px] p-8 shadow-2xl">
+            <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-4 transition-all duration-300 transform origin-top z-[100] ${isFilterOpen ? 'opacity-100 scale-y-100 visible' : 'opacity-0 scale-y-95 invisible pointer-events-none'}`}>
+              <div className="bg-im-white text-im-black rounded-[32px] p-8 shadow-2xl border border-white/10">
                 <div className="flex flex-wrap gap-3 w-[300px] md:w-[600px] justify-center">
                   {DISCIPLINES.map(d => (
                     <button 
@@ -203,7 +203,7 @@ export default function Scrollytelling() {
             </div>
           </div>
           
-          <span className="opacity-80 hidden md:inline">&nbsp;for everyone.</span>
+          <span className="opacity-80 whitespace-nowrap">&nbsp;for everyone.</span>
         </div>
 
         {/* Dynamic Portfolio Grid - Editorial Abstract Matrix */}
